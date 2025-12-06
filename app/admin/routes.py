@@ -122,6 +122,7 @@ def admin_all_recipes():
 
 
 @admin_bp.route('/blog-posts')
+@login_required
 def admin_all_blogs():
     blogs = db_helpers.get_active_blog_posts()
     data = {
@@ -149,6 +150,7 @@ def add_recipe():
 
 
 @admin_bp.route('/new-blog-post', methods=['GET', 'POST'])
+@login_required
 def new_blog_post():
     form = BlogForm()
     # form.category.choices = [(cat.id, cat.name) for cat in CATEGORIES]
