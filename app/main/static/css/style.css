@@ -97,7 +97,7 @@ nav ul {
 .nav-links {
     display: flex;
     justify-content: end;
-    /* background-color: #eeb230; */
+    background-color: #48615b;
 }
 
 .nav-link {

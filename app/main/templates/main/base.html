@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('main.static', filename='css/style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/mobile-styles.css') }}">
-  <link rel="shortcut icon" href="{{ url_for('main.static', filename='images/pk_favicon.png')}}" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png')}}" type="image/x-icon">
+  <script src="{{ url_for('static', filename='js/hamburgerMenu.js') }}" defer></script>
   {% block links %}{% endblock%}
   <title>{% block title %}{% endblock %}</title>
 </head>
