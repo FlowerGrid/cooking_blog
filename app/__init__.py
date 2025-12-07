@@ -1,6 +1,8 @@
 """
 App Package
 """
+from .blueprints.main import main_bp
+from.blueprints.admin import admin_bp
 from dotenv import load_dotenv
 from flask import Flask, current_app, url_for, render_template
 from flask_ckeditor import CKEditor
@@ -23,10 +25,7 @@ def create_app():
 
     ckeditor.init_app(app)
 
-    from .admin import admin_bp
     app.register_blueprint(admin_bp, url_prefix='/admin')
-
-    from .main import main_bp
     app.register_blueprint(main_bp, url_prefix='/')
 
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
@@ -35,6 +34,8 @@ def create_app():
     app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024
 
     print("Registered blueprints:", app.blueprints)
+
+    from .cli import init_cli
 
 
     @app.errorhandler(HTTPException)
@@ -54,6 +55,9 @@ def create_app():
             return {
                 'logo_url': url_for('static', filename='images/default-logo.png')
             }
+        
+
+    init_cli(app)
 
 
     return app
