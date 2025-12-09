@@ -2,12 +2,15 @@
 App Package
 """
 from .blueprints.main import main_bp
-from.blueprints.admin import admin_bp
+from .blueprints.admin import admin_bp
+from .db import init_db, DATABASE_URL
 from dotenv import load_dotenv
 from flask import Flask, current_app, url_for, render_template
 from flask_ckeditor import CKEditor
 import os
 from werkzeug.exceptions import HTTPException
+
+import traceback; traceback.print_stack()
 
 load_dotenv()
 
@@ -16,6 +19,8 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 ckeditor = CKEditor()
 
 def create_app():
+    print(">>> LOADING APP FACTORY")
+
     app = Flask(
         __name__,
         static_folder=os.path.join(BASE_DIR, 'static'),
@@ -32,6 +37,13 @@ def create_app():
     app.config['CKEDITOR_PKG_TYPE'] = 'basic'
     app.config['CKEDITOR_ENABLE_CODESNIPPET'] = False
     app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024
+
+    # Database
+    app.config['DATABASE_URL'] = DATABASE_URL
+    app.config['SQLALCHEMY_ECHO'] = False
+    app.config['CREATE_TABLES'] = True   # Local only
+
+    init_db(app)
 
     print("Registered blueprints:", app.blueprints)
 

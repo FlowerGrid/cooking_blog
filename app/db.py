@@ -1,26 +1,27 @@
 # db.py
 import os
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker
 from .models import Base
 
 
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DB_PATH = os.path.join(BASE_DIR, 'recipe-db.sqlite3')
 DEFAULT_DATABASE_URL = f"sqlite:///{DB_PATH}"
 DATABASE_URL = os.environ.get('DATABASE_URL', DEFAULT_DATABASE_URL)
 
-# Create the engine
-engine = create_engine(DATABASE_URL, echo=True)
+# Initialize database after flask has created the app
+ENGINE = None
+db_session = scoped_session(sessionmaker())
 
-print('db-url')
-print(engine.url)
+def init_db(app):
+    global ENGINE
 
-# Create a configured "Session" class
-SessionLocal = sessionmaker(bind=engine)
+    database_url = app.config.get('DATABASE_URL')
+    ENGINE = create_engine(database_url, echo=app.config.get('SQL_ALCHEMY_ECHO', False))
 
-# Create a Session instance to use
-db_session = SessionLocal()
+    db_session.configure(bind=ENGINE)
 
-# Create tables if they don't exist (optional, since Alembic should manage this in production)
-Base.metadata.create_all(engine)
+    # Create tables for local development
+    if app.config.get('CREATE_TABLES', False):
+        Base.metadata.create_all(ENGINE)

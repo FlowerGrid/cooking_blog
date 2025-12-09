@@ -1,12 +1,17 @@
-from .db import db_session
-from .models import User
+"""
+Create User CLI tool
+"""
 
 def init_cli(app):
     @app.cli.command('create-user')
     def create_user():
         print('Provide user credentials. To QUIT type "q".')
-        creds = prompt_user_creds()
 
+        # Import necessary modules
+        from .db import db_session
+        from .models import User
+
+        creds = prompt_user_creds()
         if creds is None:
             print('User creation cancelled.')
             return
@@ -37,7 +42,7 @@ def prompt_user_creds():
             print('Passwords did not match. Try again\n')
 
 
-def add_user_to_db(username, email, password):
+def add_user_to_db(username, email, password, db_session, User):
     user = User(
         username=username.lower(),
         email=email.lower()
