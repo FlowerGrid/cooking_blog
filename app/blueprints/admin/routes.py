@@ -40,7 +40,7 @@ def login():
 
         if user_check:
             session['username'] = username
-            flash(f'welcome, {session['username']} successfully logged in!', 'success')
+            flash(f'welcome, {session["username"]} successfully logged in!', 'success')
             return redirect(url_for('admin.admin_dash'))
         else:
             flash(f'Incorrect username or password.', 'danger')
