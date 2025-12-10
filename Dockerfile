@@ -21,5 +21,5 @@ EXPOSE 8080
 ENV PORT=8080
 
 # Last command. actually starts the process
-CMD ["gunicorn", "-b", "0.0.0.0:$PORT", "run:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "run:app"]
 # CMD gunicorn -b 0.0.0.0:8080 run:app
