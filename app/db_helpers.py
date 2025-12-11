@@ -14,6 +14,7 @@ from .db import db_session
 from werkzeug.utils import secure_filename
 from .models import Base, Recipe, User, BlogPost, Tag # Removed Category
 
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.abspath(os.path.join(BASE_DIR, '..', 'static', 'uploads'))
 
@@ -266,7 +267,12 @@ def get_user_info(id):
 
 
 def get_admin():
-    return db_session.query(User).filter_by(is_admin=True).one_or_none()
+    try:
+        return db_session.query(User).filter_by(is_admin=True).one_or_none()
+    except Exception as e:
+        db_session.rollback()
+        logger.exception(e)
+        return None
 
 
 # Deprecated in favor of tags
