@@ -55,7 +55,7 @@ def create_app():
     @app.context_processor
     def inject_logo_url():
         # user_logo_path = os.path.join(BASE_DIR, 'static', 'uploads', 'users', 'user-logo.png')
-        user_logo = get_user_info(2).logo_img
+        user_logo = 
 
         if user_logo:
             return {
