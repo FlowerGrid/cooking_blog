@@ -139,13 +139,19 @@ def image_helper2(model_cls_str, image_file, slug):
 
         # Reset file pointer so Pillow can read the image again
         image_file.seek(0)
-        with Image.open(image_file) as img:
-        # convert to png
-            img = img.convert('RGB')
 
-            img.thumbnail((MAX_SIZE, MAX_SIZE)) # MAX_SIZE = 1024
+        bucket_name = 'flower-grid-cooking-blog-uploads'
+        organized_slug = f'{model_cls_str}/{slug}'
+        img_public_url = upload_image_to_gcs(img, organized_slug, bucket_name)
+
 
         # For local development:
+        # with Image.open(image_file) as img:
+        # # convert to png
+        #     img = img.convert('RGB')
+
+        #     img.thumbnail((MAX_SIZE, MAX_SIZE)) # MAX_SIZE = 1024
+
         #     filename = os.path.join(model_cls_str, f'{slug}.png')
 
         #     img.save(os.path.join(UPLOAD_FOLDER, filename), format='PNG', optimize=True)
@@ -153,9 +159,7 @@ def image_helper2(model_cls_str, image_file, slug):
         # return os.path.join('uploads', filename)
         
             # Upload to Google Cloud Storage and get the url to save into database
-            bucket_name = 'flower-grid-cooking-blog-uploads'
-            organized_slug = f'{model_cls_str}/{slug}'
-            img_public_url = upload_image_to_gcs(img, organized_slug, bucket_name)
+
 
         return img_public_url
     except Exception:

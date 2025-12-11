@@ -18,6 +18,17 @@ def init_cli(app):
         
         add_user_to_db(*creds, db_session, User)
 
+    
+    @app.cli.command('db-rollback')
+    def db_rollback_handler():
+        from .db import db_session
+
+        try:
+            db_session.rollback()
+            print("Database session rolled back successfully.")
+        except Exception as e:
+            print(f"Failed to rollback session: {e}")
+
 
 def prompt_user_creds():
     while True:
@@ -53,3 +64,5 @@ def add_user_to_db(username, email, password, db_session, User):
 
     db_session.add(user)
     db_session.commit()
+
+
