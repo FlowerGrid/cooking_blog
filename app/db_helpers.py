@@ -142,7 +142,7 @@ def image_helper2(model_cls_str, image_file, slug):
 
         bucket_name = 'flower-grid-cooking-blog-uploads'
         organized_slug = f'{model_cls_str}/{slug}'
-        img_public_url = upload_image_to_gcs(img, organized_slug, bucket_name)
+        img_public_url = upload_image_to_gcs(image_file, organized_slug, bucket_name)
 
 
         # For local development:
