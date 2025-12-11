@@ -264,6 +264,10 @@ def get_user_info(id):
     return db_session.query(User).filter_by(id=id).first()
 
 
+def get_admin():
+    return db_session.query(User).filter_by(is_admin=True).one_or_none()
+
+
 # Deprecated in favor of tags
 # Seed data to db
 # def seed_categories():
