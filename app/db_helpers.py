@@ -4,7 +4,7 @@ from flask import request, session, flash, current_app
 from google.cloud import storage
 import html, json
 import io
-import logging
+from .logger import logger
 import os
 from PIL import Image
 import pillow_heif
@@ -162,8 +162,9 @@ def image_helper2(model_cls_str, image_file, slug):
 
 
         return img_public_url
-    except Exception:
+    except Exception as e:
         # Log this
+        logger.info(e)
         return None
     
 
