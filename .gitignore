@@ -29,9 +29,7 @@ instance/
 *.sqlite3
 
 # Uploaded images (optional — if you're not storing them in Git)
-static/uploads/
 uploads/
-*uploads/
 
 # VSCode settings (if using VSCode)
 .vscode/
@@ -60,10 +58,10 @@ recipe-db
 recipe-db.sqlite3
 
 # photos
-*.png
-*.jpg
-*.jpeg
-*.gif
+# *.png
+# *.jpg
+# *.jpeg
+# *.gif
 
 scripts
 scripts/
