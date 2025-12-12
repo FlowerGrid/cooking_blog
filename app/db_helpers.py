@@ -32,6 +32,7 @@ def gather_form_data_unified(model_cls, form, rel_attr_name):
     blurb = sanitize_html(form.blurb.data.strip())
 
     model_cls_str = model_cls.__tablename__ # String of table's name
+    logger.info(f'model class string: {model_cls_str}')
 
     recipe_exclusives = {}
     try:
@@ -48,8 +49,6 @@ def gather_form_data_unified(model_cls, form, rel_attr_name):
     blurb_plaintext = BeautifulSoup(blurb, 'html.parser').get_text()
 
     obj_id = form.id.data
-
-    
 
     if obj_id:
         # Delete old photo up here
@@ -84,7 +83,7 @@ def gather_form_data_unified(model_cls, form, rel_attr_name):
             title=title,
             slug=slug,
             blurb=blurb,
-            image_url=None,
+            # image_url=None,
             blurb_plaintext=blurb_plaintext) # Removed category_id=cat_id,
         
         if recipe_exclusives:
