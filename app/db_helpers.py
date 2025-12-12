@@ -331,7 +331,7 @@ def change_pw(form):
 def sanitize_html(html_input):
     cleaned = bleach.clean(
         html_input,
-        tags=['p', 'strong', 'em', 'a', 'ul', 'ol', 'li'],
+        tags=['p', 'strong', 'em', 'a', 'ul', 'ol', 'li', 'br'],
         attributes={'a': ['href']}
     )
 

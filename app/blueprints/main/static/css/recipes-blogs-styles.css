@@ -74,7 +74,7 @@
     left: 0;
     width: 100%;
     height: 1.5em;
-    background: linear-gradient(to bottom, rgba(255,255,255,0), white);
+    background: linear-gradient(to bottom, rgba(255,255,255,0), #fdfaf0);
 }
 
 @media (max-width: 768px) {
