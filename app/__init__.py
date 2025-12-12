@@ -36,7 +36,7 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['CKEDITOR_PKG_TYPE'] = 'basic'
     app.config['CKEDITOR_ENABLE_CODESNIPPET'] = False
-    app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024
+    app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 
     # Database
     app.config['SQLALCHEMY_ECHO'] = False

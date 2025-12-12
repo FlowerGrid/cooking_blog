@@ -32,7 +32,7 @@ def gather_form_data_unified(model_cls, form, rel_attr_name):
     blurb = sanitize_html(form.blurb.data.strip())
 
     model_cls_str = model_cls.__tablename__ # String of table's name
-    logger.info(f'model class string: {model_cls_str}')
+    logger.info('model class string: ', model_cls_str)
 
     recipe_exclusives = {}
     try:
