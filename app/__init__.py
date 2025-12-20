@@ -34,10 +34,11 @@ def create_app():
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(main_bp, url_prefix='/')
 
-    # App COnfiguration
+    # App Configuration
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['ENV_NAME'] = os.getenv('ENV_NAME')
     app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
+    
 
     # CK Editor Setup
     app.config['CKEDITOR_PKG_TYPE'] = 'basic'
@@ -57,9 +58,13 @@ def create_app():
 
     if app.config['ENV_NAME'] == 'local':
         from .storage.local import LocalImageStorage
+        app.config['IMAGE_STORAGE_BACKEND'] = 'local'
+        app.config['IMAGE_STORAGE_CONTAINER'] = app.config['UPLOAD_FOLDER']
         app.extensions['image_storage'] = LocalImageStorage(app)
     else:
         from .storage.gcs import GCSImageStorage
+        app.config['IMAGE_STORAGE_BACKEND'] = 'gcs'
+        app.config['IMAGE_STORAGE_CONTAINER'] = os.getenv('IMAGE_STORAGE_CONTAINER')
         app.extensions['image_storage'] = GCSImageStorage(app)
 
 
