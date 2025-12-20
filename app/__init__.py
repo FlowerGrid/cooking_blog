@@ -27,29 +27,35 @@ def create_app():
         static_url_path='/static'
         )
 
-    from .routes import dev_routes
-    dev_routes.register_dev_routes(app)
+
 
     ckeditor.init_app(app)
 
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(main_bp, url_prefix='/')
 
+    # App COnfiguration
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    app.config['ENV_NAME'] = os.getenv('ENV_NAME')
+    app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
+
+    # CK Editor Setup
     app.config['CKEDITOR_PKG_TYPE'] = 'basic'
     app.config['CKEDITOR_ENABLE_CODESNIPPET'] = False
-    app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
-    app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, 'static', 'uploads')
-    app.config['ENV_NAME'] = os.getenv('ENV_NAME')
+ 
+    
 
     # Database
     app.config['SQLALCHEMY_ECHO'] = False
     app.config['CREATE_TABLES'] = False   # Set to True for local development
 
+    # Local dev setup
+    from .routes import dev_routes
+    dev_routes.register_dev_routes(app)
     app.config['DEBUG'] = app.config['ENV_NAME'] == 'local'
+    app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, 'static', 'uploads')
 
     if app.config['ENV_NAME'] == 'local':
-        
         from .storage.local import LocalImageStorage
         app.extensions['image_storage'] = LocalImageStorage(app)
     else:
